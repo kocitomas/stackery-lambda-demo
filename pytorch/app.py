@@ -126,10 +126,10 @@ def input_fn(request_body):
     
     """    
     logger.info("Getting input URL to a image Tensor object")
-    print(request_body)
-    image_file = request_body["image"]
-    print(image_file)
-    img = PIL.Image.open(image_file)
+    if isinstance(request_body, str):
+        request_body = json.loads(request_body)
+    print(request_body["image"])
+    img = PIL.Image.open(io.BytesIO(request_body["image"]))
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
     return img_tensor
@@ -156,6 +156,7 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     print("Starting event")
+    logger.info(event)
     print("Getting input object")
     input_object = input_fn(event['body'])
     print("Calling prediction")
