@@ -156,7 +156,6 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     print("Starting event")
-    logger.info(event)
     print("Getting input object")
     input_object = input_fn(event['body'])
     print("Calling prediction")
