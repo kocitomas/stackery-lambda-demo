@@ -112,7 +112,7 @@ def predict(input_object, model):
     response['confidence'] = conf_score.item()
     return response
     
-def input_fn(request_body):
+def input_fn(body):
     """Pre-processes the input data from JSON to PyTorch Tensor.
 
     Parameters
