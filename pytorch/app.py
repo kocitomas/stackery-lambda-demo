@@ -14,6 +14,7 @@ import time
 import logging
 
 import boto3
+import base64
 import requests
 import PIL
 
