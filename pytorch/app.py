@@ -132,7 +132,7 @@ def input_fn(event):
     logger.info("body len: {}".format(len(body)))
     logger.info("content-type: {}".format(event["headers"]["Content-Type"]))
     logger.info("b64decoding…")
-    img = b64decode(body)
+    img = base64.b64decode(body)
     img = PIL.Image.open(img)
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
