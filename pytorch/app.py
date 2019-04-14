@@ -126,10 +126,8 @@ def input_fn(request_body):
     
     """    
     logger.info("Getting input URL to a image Tensor object")
-    if isinstance(request_body, str):
-        request_body = json.loads(request_body)
-    img_request = requests.get(request_body['url'], stream=True)
-    img = PIL.Image.open(io.BytesIO(img_request.content))
+    image_file = request_body["image"]
+    img = PIL.Image.open(image_file)
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
     return img_tensor
