@@ -124,12 +124,16 @@ def input_fn(request_body):
     ------
     PyTorch Tensor object: Tensor
     
-    """    
-    logger.info("Getting input URL to a image Tensor object")
-    if isinstance(request_body, str):
-        request_body = json.loads(request_body)
-    print(request_body["image"])
-    img = PIL.Image.open(io.BytesIO(request_body["image"]))
+    """
+    print("got here!")
+    print(body)
+    logger.info(‘API isBase64Encoded={}’.format(event[‘isBase64Encoded’]))
+    logger.info(‘body type={}’.format(type(body)))
+    logger.info(‘body len: {}’.format(len(body)))
+    logger.info(‘content-type: {}’.format(event[‘headers’][‘Content-Type’]))
+    logger.info(‘b64decoding…’)
+    img = b64decode(body)
+    img = PIL.Image.open(img)
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
     return img_tensor
