@@ -127,6 +127,7 @@ def input_fn(request_body):
     """    
     logger.info("Getting input URL to a image Tensor object")
     image_file = request_body["image"]
+    logger.info(image_file)
     img = PIL.Image.open(image_file)
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
