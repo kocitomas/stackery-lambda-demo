@@ -112,7 +112,7 @@ def predict(input_object, model):
     response['confidence'] = conf_score.item()
     return response
     
-def input_fn(body):
+def input_fn(event):
     """Pre-processes the input data from JSON to PyTorch Tensor.
 
     Parameters
@@ -126,7 +126,7 @@ def input_fn(body):
     
     """
     print("got here!")
-    print(body)
+    body = event["body"]
     logger.info("API isBase64Encoded={}".format(event["isBase64Encoded"]))
     logger.info("body type={}".format(type(body)))
     logger.info("body len: {}".format(len(body)))
@@ -162,7 +162,7 @@ def lambda_handler(event, context):
     print("Starting event")
     logger.info(event)
     print("Getting input object")
-    input_object = input_fn(event['body'])
+    input_object = input_fn(event)
     print("Calling prediction")
     response = predict(input_object, model)
     print("Returning response")
